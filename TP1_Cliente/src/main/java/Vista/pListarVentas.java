@@ -5,6 +5,7 @@
 package Vista;
 
 import Cliente.Principal;
+import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -158,6 +159,8 @@ public class pListarVentas extends javax.swing.JPanel {
                     }
                 }
             } catch (RemoteException ex) {
+                Logger.getLogger(pListarVentas.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (NotBoundException ex) {
                 Logger.getLogger(pListarVentas.class.getName()).log(Level.SEVERE, null, ex);
             }
         }

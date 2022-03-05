@@ -5,6 +5,7 @@
 package Vista;
 
 import Cliente.Principal;
+import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -162,7 +163,7 @@ public class pClientes extends javax.swing.JPanel {
     public javax.swing.JTextField jtfBuscar;
     // End of variables declaration//GEN-END:variables
 
-    void cargarTabla() {
+    void cargarTabla() throws NotBoundException {
         try {
             Principal p = new Principal();
             String[][] clientes = p.cargarTabla();

@@ -5,6 +5,7 @@
 package Vista;
 
 import Cliente.Principal;
+import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.logging.Level;
@@ -347,6 +348,8 @@ public class pModProductos extends javax.swing.JPanel {
                 showMessageDialog(null, "Producto modificado con exito");
             } catch (RemoteException ex) {
                 Logger.getLogger(pModProductos.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (NotBoundException ex) {
+                Logger.getLogger(pModProductos.class.getName()).log(Level.SEVERE, null, ex);
             }
         } else {
             JOptionPane.showMessageDialog(null, "Campos vacios en la modificacion");
@@ -368,6 +371,8 @@ public class pModProductos extends javax.swing.JPanel {
                 jtfMargen.setText(producto.get(5));
                 jtfNombre.setEnabled(false);
             } catch (RemoteException ex) {
+                Logger.getLogger(pModProductos.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (NotBoundException ex) {
                 Logger.getLogger(pModProductos.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
@@ -409,7 +414,7 @@ public class pModProductos extends javax.swing.JPanel {
     public javax.swing.JTextField jtfNombre;
     // End of variables declaration//GEN-END:variables
 
-    void cargarCombosM() {
+    void cargarCombosM() throws NotBoundException {
         try {
             Principal p = new Principal();
             cbMarca.removeAllItems();

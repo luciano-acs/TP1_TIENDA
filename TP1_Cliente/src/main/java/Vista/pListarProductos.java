@@ -7,6 +7,7 @@ package Vista;
 import Cliente.Principal;
 import Presentador.PresentadorProductos;
 import static java.lang.System.out;
+import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.logging.Level;
@@ -180,6 +181,8 @@ public class pListarProductos extends javax.swing.JPanel {
                     p.eliminarProducto(codProducto);
                 } catch (RemoteException ex) {
                     Logger.getLogger(pListarProductos.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (NotBoundException ex) {
+                    Logger.getLogger(pListarProductos.class.getName()).log(Level.SEVERE, null, ex);
                 }
             } 
         }
@@ -201,7 +204,7 @@ public class pListarProductos extends javax.swing.JPanel {
     public javax.swing.JTextField jtfBuscar;
     // End of variables declaration//GEN-END:variables
 
-    void listarTabla() {
+    void listarTabla() throws NotBoundException {
         try {
             Principal p = new Principal();
             String[][] productos = p.listarTablaProductos();

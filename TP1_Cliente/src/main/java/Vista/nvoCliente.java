@@ -5,6 +5,7 @@
 package Vista;
 
 import Cliente.Principal;
+import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.logging.Level;
@@ -173,6 +174,8 @@ public class nvoCliente extends javax.swing.JFrame {
                 dispose();
             } catch (RemoteException ex) {
                 Logger.getLogger(nvoCliente.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (NotBoundException ex) {
+                Logger.getLogger(nvoCliente.class.getName()).log(Level.SEVERE, null, ex);
             }
             }    
     }//GEN-LAST:event_btnRegistrarCActionPerformed
@@ -228,7 +231,7 @@ public class nvoCliente extends javax.swing.JFrame {
     public javax.swing.JTextField jtlCUIT;
     // End of variables declaration//GEN-END:variables
 
-    public void cargarCombos() {
+    public void cargarCombos() throws NotBoundException {
         try {
             Principal p = new Principal();
             ArrayList<String> condiciones = p.cargarCombos();

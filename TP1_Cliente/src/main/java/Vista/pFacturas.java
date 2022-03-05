@@ -13,6 +13,7 @@ import static java.awt.print.Printable.NO_SUCH_PAGE;
 import static java.awt.print.Printable.PAGE_EXISTS;
 import java.awt.print.PrinterException;
 import java.awt.print.PrinterJob;
+import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.logging.Level;
@@ -527,7 +528,7 @@ public class pFacturas extends javax.swing.JFrame {
     public javax.swing.JTable jtLinea;
     // End of variables declaration//GEN-END:variables
 
-    void cargar(String id, String cuit, DefaultTableModel datos) {
+    void cargar(String id, String cuit, DefaultTableModel datos) throws NotBoundException {
         try {
             Principal p = new Principal();
             ArrayList<String> factura = p.buscarFactura(id,cuit);

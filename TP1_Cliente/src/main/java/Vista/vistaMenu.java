@@ -4,9 +4,9 @@
  */
 package Vista;
 
-
 import Cliente.Principal;
 import java.awt.Color;
+import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.util.Calendar;
 import static java.util.Calendar.DAY_OF_MONTH;
@@ -21,7 +21,7 @@ import javax.swing.SwingConstants;
  *
  * @author Luciano Acosta
  */
-public class vistaMenu extends javax.swing.JFrame{
+public class vistaMenu extends javax.swing.JFrame {
 
 //    pFactura factura = new pFactura();    
     pProductos productos = new pProductos();
@@ -33,77 +33,81 @@ public class vistaMenu extends javax.swing.JFrame{
     pgestiones gestion = new pgestiones();
     pDevoluciones devolucion = new pDevoluciones();
     pListarVentas listaVentas = new pListarVentas();
-    
-    public vistaMenu(){}
+
+    public vistaMenu() {
+    }
+
     public vistaMenu(String legajo, String rol, String apellido, String nombre) {
         initComponents();
-        
-        add(productos); 
-        add(ventas); 
-        add(clientes); 
-        add(logo); 
-        add(listaProd); 
+
+        add(productos);
+        add(ventas);
+        add(clientes);
+        add(logo);
+        add(listaProd);
         add(modProductos);
         add(gestion);
         add(devolucion);
         add(listaVentas);
-        
+
         logo.setVisible(true);
         productos.setVisible(false);
         ventas.setVisible(false);
-        clientes.setVisible(false); 
+        clientes.setVisible(false);
         listaProd.setVisible(false);
         modProductos.setVisible(false);
         gestion.setVisible(false);
         devolucion.setVisible(false);
         listaVentas.setVisible(false);
-        
+
         logo.setBounds(250, 100, 700, 700);
         productos.setBounds(250, 100, 700, 700);
         ventas.setBounds(250, 100, 700, 700);
         clientes.setBounds(250, 100, 700, 700);
         listaProd.setBounds(250, 100, 700, 700);
         modProductos.setBounds(250, 100, 700, 700);
-        gestion.setBounds(250,100,700,700);
-        devolucion.setBounds(250,100,700,700);
-        listaVentas.setBounds(250,100,700,700);
-        
+        gestion.setBounds(250, 100, 700, 700);
+        devolucion.setBounds(250, 100, 700, 700);
+        listaVentas.setBounds(250, 100, 700, 700);
+
         //empleado
         jlLegajo.setText(legajo);
-        jlEmpleado.setText(apellido+", "+nombre);
-        
+        jlEmpleado.setText(apellido + ", " + nombre);
+
         //tipo de control
-        if(rol.equals("G")){
+        if (rol.equals("G")) {
             btnListarProd.setEnabled(false);
-            btnModProducto.setEnabled(false);            
+            btnModProducto.setEnabled(false);
             btnNvoProducto.setEnabled(false);
             btnDevoluciones.setEnabled(false);
-            btnListarVentas.setEnabled(false); 
-        }if(rol.equals("V")){
+            btnListarVentas.setEnabled(false);
+        }
+        if (rol.equals("V")) {
             btnClientes.setEnabled(false);
             btnNvoCliente.setEnabled(false);
             btnGestiones.setEnabled(false);
             btnListarProd.setEnabled(false);
-            btnModProducto.setEnabled(false);            
+            btnModProducto.setEnabled(false);
             btnNvoProducto.setEnabled(false);
-            btnListarVentas.setEnabled(false);            
-        }if(rol.endsWith("A")){
+            btnListarVentas.setEnabled(false);
+        }
+        if (rol.endsWith("A")) {
             btnClientes.setEnabled(false);
             btnNvoCliente.setEnabled(false);
             btnListarVentas.setEnabled(false);
             btnDevoluciones.setEnabled(false);
-            btnListarVentas.setEnabled(false); 
+            btnListarVentas.setEnabled(false);
         }
-        
+
         //fecha
         Calendar fecha = new GregorianCalendar();
         int mes = fecha.get(MONTH);
-        jlFecha.setText("Fecha: "+""+fecha.get(DAY_OF_MONTH)+"/"+(mes+1)+"/"+fecha.get(YEAR));
-        
+        jlFecha.setText("Fecha: " + "" + fecha.get(DAY_OF_MONTH) + "/" + (mes + 1) + "/" + fecha.get(YEAR));
+
         //logos principales
         jlLogo.setVisible(false);
-        jlLogo1.setVisible(true);        
-        
+        jlLogo1.setVisible(true);
+
     }
 
 //    private void cambiarPanel(JPanel panel){
@@ -530,41 +534,45 @@ public class vistaMenu extends javax.swing.JFrame{
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnNvoClienteMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnNvoClienteMousePressed
-        btnVentas.setBackground(Color.black);
-        btnVentas.setForeground(Color.white);
-        btnNvoProducto.setBackground(Color.black);
-        btnNvoProducto.setForeground(Color.white);
-        btnClientes.setBackground(Color.black);
-        btnClientes.setForeground(Color.white);
-        btnNvoCliente.setBackground(Color.white);
-        btnNvoCliente.setForeground(Color.black);
-        btnListarProd.setBackground(Color.black);
-        btnListarProd.setForeground(Color.white);
-        btnModProducto.setBackground(Color.black);
-        btnModProducto.setForeground(Color.white);
-        btnGestiones.setBackground(Color.black);
-        btnGestiones.setForeground(Color.white);
-        btnDevoluciones.setBackground(Color.black);
-        btnDevoluciones.setForeground(Color.white);
-        btnListarVentas.setBackground(Color.black);
-        btnListarVentas.setForeground(Color.white);
-        
-        jlLogo.setVisible(true);
-        jlLogo1.setVisible(false);
-        nvoCliente nvoCliente = new nvoCliente();
-        nvoCliente.setVisible(true);
-        logo.setVisible(false);
-        productos.setVisible(false);
-        ventas.setVisible(false);
-        clientes.setVisible(false); 
-        listaProd.setVisible(false);
-        modProductos.setVisible(false);
-        gestion.setVisible(false);
-        devolucion.setVisible(false);
-        listaVentas.setVisible(false);
-        
+        try {
+            btnVentas.setBackground(Color.black);
+            btnVentas.setForeground(Color.white);
+            btnNvoProducto.setBackground(Color.black);
+            btnNvoProducto.setForeground(Color.white);
+            btnClientes.setBackground(Color.black);
+            btnClientes.setForeground(Color.white);
+            btnNvoCliente.setBackground(Color.white);
+            btnNvoCliente.setForeground(Color.black);
+            btnListarProd.setBackground(Color.black);
+            btnListarProd.setForeground(Color.white);
+            btnModProducto.setBackground(Color.black);
+            btnModProducto.setForeground(Color.white);
+            btnGestiones.setBackground(Color.black);
+            btnGestiones.setForeground(Color.white);
+            btnDevoluciones.setBackground(Color.black);
+            btnDevoluciones.setForeground(Color.white);
+            btnListarVentas.setBackground(Color.black);
+            btnListarVentas.setForeground(Color.white);
+
+            jlLogo.setVisible(true);
+            jlLogo1.setVisible(false);
+            nvoCliente nvoCliente = new nvoCliente();
+            nvoCliente.setVisible(true);
+            logo.setVisible(false);
+            productos.setVisible(false);
+            ventas.setVisible(false);
+            clientes.setVisible(false);
+            listaProd.setVisible(false);
+            modProductos.setVisible(false);
+            gestion.setVisible(false);
+            devolucion.setVisible(false);
+            listaVentas.setVisible(false);
+
 //        PresentadorNuevoCliente nuevo = new PresentadorNuevoCliente(nvoCliente);
-        nvoCliente.cargarCombos();
+            nvoCliente.cargarCombos();
+        } catch (NotBoundException ex) {
+            Logger.getLogger(vistaMenu.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_btnNvoClienteMousePressed
 
     private void btnListarProdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnListarProdActionPerformed
@@ -572,42 +580,46 @@ public class vistaMenu extends javax.swing.JFrame{
     }//GEN-LAST:event_btnListarProdActionPerformed
 
     private void btnListarProdMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnListarProdMousePressed
-        btnVentas.setBackground(Color.black);
-        btnVentas.setForeground(Color.white);
-        btnNvoProducto.setBackground(Color.black);
-        btnNvoProducto.setForeground(Color.white);
-        btnClientes.setBackground(Color.black);
-        btnClientes.setForeground(Color.white);
-        btnNvoCliente.setBackground(Color.black);
-        btnNvoCliente.setForeground(Color.white);
-        btnListarProd.setBackground(Color.white);
-        btnListarProd.setForeground(Color.black);
-        btnModProducto.setBackground(Color.black);
-        btnModProducto.setForeground(Color.white);
-        btnGestiones.setBackground(Color.black);
-        btnGestiones.setForeground(Color.white);
-        btnDevoluciones.setBackground(Color.black);
-        btnDevoluciones.setForeground(Color.white);
-        btnListarVentas.setBackground(Color.black);
-        btnListarVentas.setForeground(Color.white);
-        
-        jlLogo.setVisible(true);
-        jlLogo1.setVisible(false);
-        
-        logo.setVisible(false);
-        productos.setVisible(false);
-        ventas.setVisible(false);
-        clientes.setVisible(false); 
-        listaProd.setVisible(true);
-        modProductos.setVisible(false);
-        gestion.setVisible(false);
-        devolucion.setVisible(false);
-        listaVentas.setVisible(false);        
-        
+        try {
+            btnVentas.setBackground(Color.black);
+            btnVentas.setForeground(Color.white);
+            btnNvoProducto.setBackground(Color.black);
+            btnNvoProducto.setForeground(Color.white);
+            btnClientes.setBackground(Color.black);
+            btnClientes.setForeground(Color.white);
+            btnNvoCliente.setBackground(Color.black);
+            btnNvoCliente.setForeground(Color.white);
+            btnListarProd.setBackground(Color.white);
+            btnListarProd.setForeground(Color.black);
+            btnModProducto.setBackground(Color.black);
+            btnModProducto.setForeground(Color.white);
+            btnGestiones.setBackground(Color.black);
+            btnGestiones.setForeground(Color.white);
+            btnDevoluciones.setBackground(Color.black);
+            btnDevoluciones.setForeground(Color.white);
+            btnListarVentas.setBackground(Color.black);
+            btnListarVentas.setForeground(Color.white);
+
+            jlLogo.setVisible(true);
+            jlLogo1.setVisible(false);
+
+            logo.setVisible(false);
+            productos.setVisible(false);
+            ventas.setVisible(false);
+            clientes.setVisible(false);
+            listaProd.setVisible(true);
+            modProductos.setVisible(false);
+            gestion.setVisible(false);
+            devolucion.setVisible(false);
+            listaVentas.setVisible(false);
+
 //        PresentadorProductos pp = new PresentadorProductos(listaProd);
-        listaProd.listarTabla();
-        listaProd.limpiar();
-        
+            listaProd.listarTabla();
+            listaProd.limpiar();
+        } catch (NotBoundException ex) {
+            Logger.getLogger(vistaMenu.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
     }//GEN-LAST:event_btnListarProdMousePressed
 
     private void btnModProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModProductoActionPerformed
@@ -615,78 +627,86 @@ public class vistaMenu extends javax.swing.JFrame{
     }//GEN-LAST:event_btnModProductoActionPerformed
 
     private void btnModProductoMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnModProductoMousePressed
-        btnVentas.setBackground(Color.black);
-        btnVentas.setForeground(Color.white);
-        btnNvoProducto.setBackground(Color.black);
-        btnNvoProducto.setForeground(Color.white);
-        btnClientes.setBackground(Color.black);
-        btnClientes.setForeground(Color.white);
-        btnNvoCliente.setBackground(Color.black);
-        btnNvoCliente.setForeground(Color.white);
-        btnListarProd.setBackground(Color.black);
-        btnListarProd.setForeground(Color.white);
-        btnModProducto.setBackground(Color.white);
-        btnModProducto.setForeground(Color.black);
-        btnGestiones.setBackground(Color.black);
-        btnGestiones.setForeground(Color.white);
-        btnDevoluciones.setBackground(Color.black);
-        btnDevoluciones.setForeground(Color.white);
-        btnListarVentas.setBackground(Color.black);
-        btnListarVentas.setForeground(Color.white);
-        
-        jlLogo.setVisible(true);
-        jlLogo1.setVisible(false);
-        
-        logo.setVisible(false);
-        productos.setVisible(false);
-        ventas.setVisible(false);
-        clientes.setVisible(false); 
-        listaProd.setVisible(false);
-        modProductos.setVisible(true);
-        gestion.setVisible(false);
-        devolucion.setVisible(false);
-        listaVentas.setVisible(false);
-        
+        try {
+            btnVentas.setBackground(Color.black);
+            btnVentas.setForeground(Color.white);
+            btnNvoProducto.setBackground(Color.black);
+            btnNvoProducto.setForeground(Color.white);
+            btnClientes.setBackground(Color.black);
+            btnClientes.setForeground(Color.white);
+            btnNvoCliente.setBackground(Color.black);
+            btnNvoCliente.setForeground(Color.white);
+            btnListarProd.setBackground(Color.black);
+            btnListarProd.setForeground(Color.white);
+            btnModProducto.setBackground(Color.white);
+            btnModProducto.setForeground(Color.black);
+            btnGestiones.setBackground(Color.black);
+            btnGestiones.setForeground(Color.white);
+            btnDevoluciones.setBackground(Color.black);
+            btnDevoluciones.setForeground(Color.white);
+            btnListarVentas.setBackground(Color.black);
+            btnListarVentas.setForeground(Color.white);
+
+            jlLogo.setVisible(true);
+            jlLogo1.setVisible(false);
+
+            logo.setVisible(false);
+            productos.setVisible(false);
+            ventas.setVisible(false);
+            clientes.setVisible(false);
+            listaProd.setVisible(false);
+            modProductos.setVisible(true);
+            gestion.setVisible(false);
+            devolucion.setVisible(false);
+            listaVentas.setVisible(false);
+
 //        PresentadorModProducto pmp = new PresentadorModProducto(modProductos);
-        modProductos.cargarCombosM();
-        modProductos.limpiar();
+            modProductos.cargarCombosM();
+            modProductos.limpiar();
+        } catch (NotBoundException ex) {
+            Logger.getLogger(vistaMenu.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_btnModProductoMousePressed
 
     private void btnClientesMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnClientesMousePressed
-        btnVentas.setBackground(Color.black);
-        btnVentas.setForeground(Color.white);
-        btnNvoProducto.setBackground(Color.black);
-        btnNvoProducto.setForeground(Color.white);
-        btnClientes.setBackground(Color.white);
-        btnClientes.setForeground(Color.black);
-        btnNvoCliente.setBackground(Color.black);
-        btnNvoCliente.setForeground(Color.white);
-        btnListarProd.setBackground(Color.black);
-        btnListarProd.setForeground(Color.white);
-        btnModProducto.setBackground(Color.black);
-        btnModProducto.setForeground(Color.white);
-        btnGestiones.setBackground(Color.black);
-        btnGestiones.setForeground(Color.white);
-        btnDevoluciones.setBackground(Color.black);
-        btnDevoluciones.setForeground(Color.white);
-        btnListarVentas.setBackground(Color.black);
-        btnListarVentas.setForeground(Color.white);
-        
-        jlLogo.setVisible(true);
-        jlLogo1.setVisible(false);
-        
-        logo.setVisible(false);
-        productos.setVisible(false);
-        ventas.setVisible(false);
-        clientes.setVisible(true); 
-        listaProd.setVisible(false);
-        modProductos.setVisible(false);
-        gestion.setVisible(false);
-        devolucion.setVisible(false);
-        listaVentas.setVisible(false);
-        
+        try {
+            btnVentas.setBackground(Color.black);
+            btnVentas.setForeground(Color.white);
+            btnNvoProducto.setBackground(Color.black);
+            btnNvoProducto.setForeground(Color.white);
+            btnClientes.setBackground(Color.white);
+            btnClientes.setForeground(Color.black);
+            btnNvoCliente.setBackground(Color.black);
+            btnNvoCliente.setForeground(Color.white);
+            btnListarProd.setBackground(Color.black);
+            btnListarProd.setForeground(Color.white);
+            btnModProducto.setBackground(Color.black);
+            btnModProducto.setForeground(Color.white);
+            btnGestiones.setBackground(Color.black);
+            btnGestiones.setForeground(Color.white);
+            btnDevoluciones.setBackground(Color.black);
+            btnDevoluciones.setForeground(Color.white);
+            btnListarVentas.setBackground(Color.black);
+            btnListarVentas.setForeground(Color.white);
+
+            jlLogo.setVisible(true);
+            jlLogo1.setVisible(false);
+
+            logo.setVisible(false);
+            productos.setVisible(false);
+            ventas.setVisible(false);
+            clientes.setVisible(true);
+            listaProd.setVisible(false);
+            modProductos.setVisible(false);
+            gestion.setVisible(false);
+            devolucion.setVisible(false);
+            listaVentas.setVisible(false);
+
 //        PresentadorClientes pCL = new PresentadorClientes(clientes);
-        clientes.cargarTabla();
+            clientes.cargarTabla();
+        } catch (NotBoundException ex) {
+            Logger.getLogger(vistaMenu.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_btnClientesMousePressed
 
     private void btnVentasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVentasActionPerformed
@@ -697,6 +717,8 @@ public class vistaMenu extends javax.swing.JFrame{
             ventas.jtfID.setText("" + id);
             ventas.jtfID.setEnabled(false);
         } catch (RemoteException ex) {
+            Logger.getLogger(vistaMenu.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (NotBoundException ex) {
             Logger.getLogger(vistaMenu.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_btnVentasActionPerformed
@@ -720,14 +742,14 @@ public class vistaMenu extends javax.swing.JFrame{
         btnDevoluciones.setForeground(Color.white);
         btnListarVentas.setBackground(Color.black);
         btnListarVentas.setForeground(Color.white);
-        
+
         jlLogo.setVisible(true);
         jlLogo1.setVisible(false);
-        
+
         logo.setVisible(false);
         productos.setVisible(false);
         ventas.setVisible(true);
-        clientes.setVisible(false); 
+        clientes.setVisible(false);
         listaProd.setVisible(false);
         modProductos.setVisible(false);
         gestion.setVisible(false);
@@ -740,41 +762,45 @@ public class vistaMenu extends javax.swing.JFrame{
     }//GEN-LAST:event_btnNvoProductoActionPerformed
 
     private void btnNvoProductoMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnNvoProductoMousePressed
-        btnVentas.setBackground(Color.black);
-        btnVentas.setForeground(Color.white);
-        btnNvoProducto.setBackground(Color.white);
-        btnNvoProducto.setForeground(Color.black);
-        btnClientes.setBackground(Color.black);
-        btnClientes.setForeground(Color.white);
-        btnNvoCliente.setBackground(Color.black);
-        btnNvoCliente.setForeground(Color.white);
-        btnListarProd.setBackground(Color.black);
-        btnListarProd.setForeground(Color.white);
-        btnModProducto.setBackground(Color.black);
-        btnModProducto.setForeground(Color.white);
-        btnGestiones.setBackground(Color.black);
-        btnGestiones.setForeground(Color.white);
-        btnDevoluciones.setBackground(Color.black);
-        btnDevoluciones.setForeground(Color.white);
-        btnListarVentas.setBackground(Color.black);
-        btnListarVentas.setForeground(Color.white);
-        
-        jlLogo.setVisible(true);
-        jlLogo1.setVisible(false);
-        
-        logo.setVisible(false);
-        productos.setVisible(true);
-        ventas.setVisible(false);
-        clientes.setVisible(false); 
-        listaProd.setVisible(false);
-        modProductos.setVisible(false);
-        gestion.setVisible(false);
-        devolucion.setVisible(false);
-        listaVentas.setVisible(false);
-        
+        try {
+            btnVentas.setBackground(Color.black);
+            btnVentas.setForeground(Color.white);
+            btnNvoProducto.setBackground(Color.white);
+            btnNvoProducto.setForeground(Color.black);
+            btnClientes.setBackground(Color.black);
+            btnClientes.setForeground(Color.white);
+            btnNvoCliente.setBackground(Color.black);
+            btnNvoCliente.setForeground(Color.white);
+            btnListarProd.setBackground(Color.black);
+            btnListarProd.setForeground(Color.white);
+            btnModProducto.setBackground(Color.black);
+            btnModProducto.setForeground(Color.white);
+            btnGestiones.setBackground(Color.black);
+            btnGestiones.setForeground(Color.white);
+            btnDevoluciones.setBackground(Color.black);
+            btnDevoluciones.setForeground(Color.white);
+            btnListarVentas.setBackground(Color.black);
+            btnListarVentas.setForeground(Color.white);
+
+            jlLogo.setVisible(true);
+            jlLogo1.setVisible(false);
+
+            logo.setVisible(false);
+            productos.setVisible(true);
+            ventas.setVisible(false);
+            clientes.setVisible(false);
+            listaProd.setVisible(false);
+            modProductos.setVisible(false);
+            gestion.setVisible(false);
+            devolucion.setVisible(false);
+            listaVentas.setVisible(false);
+
 //        PresentadorNuevoProducto pp = new PresentadorNuevoProducto(productos);
-        productos.cargarCombos();
-        productos.limpiar();
+            productos.cargarCombos();
+            productos.limpiar();
+        } catch (NotBoundException ex) {
+            Logger.getLogger(vistaMenu.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_btnNvoProductoMousePressed
 
     private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
@@ -802,14 +828,14 @@ public class vistaMenu extends javax.swing.JFrame{
         btnDevoluciones.setForeground(Color.white);
         btnListarVentas.setBackground(Color.black);
         btnListarVentas.setForeground(Color.white);
-        
+
         jlLogo.setVisible(true);
         jlLogo1.setVisible(false);
-        
+
         logo.setVisible(false);
         productos.setVisible(false);
         ventas.setVisible(false);
-        clientes.setVisible(false); 
+        clientes.setVisible(false);
         listaProd.setVisible(false);
         modProductos.setVisible(false);
         gestion.setVisible(true);
@@ -818,11 +844,15 @@ public class vistaMenu extends javax.swing.JFrame{
     }//GEN-LAST:event_btnGestionesMousePressed
 
     private void btnGestionesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGestionesActionPerformed
-//        PresentadorGestionarProd pgp = new PresentadorGestionarProd(gestion);
-        gestion.cargarCombos();
-        gestion.listarTablaColor();
-        gestion.listarTablaMarca();
-        gestion.limpiar();
+        try {
+            //        PresentadorGestionarProd pgp = new PresentadorGestionarProd(gestion);
+            gestion.cargarCombos();
+            gestion.listarTablaColor();
+            gestion.listarTablaMarca();
+            gestion.limpiar();
+        } catch (NotBoundException ex) {
+            Logger.getLogger(vistaMenu.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_btnGestionesActionPerformed
 
     private void btnDevolucionesMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnDevolucionesMousePressed
@@ -844,14 +874,14 @@ public class vistaMenu extends javax.swing.JFrame{
         btnDevoluciones.setForeground(Color.black);
         btnListarVentas.setBackground(Color.black);
         btnListarVentas.setForeground(Color.white);
-        
+
         jlLogo.setVisible(true);
         jlLogo1.setVisible(false);
-        
+
         logo.setVisible(false);
         productos.setVisible(false);
         ventas.setVisible(false);
-        clientes.setVisible(false); 
+        clientes.setVisible(false);
         listaProd.setVisible(false);
         modProductos.setVisible(false);
         //gestion.setVisible(false);
@@ -882,20 +912,20 @@ public class vistaMenu extends javax.swing.JFrame{
         btnDevoluciones.setForeground(Color.white);
         btnListarVentas.setBackground(Color.white);
         btnListarVentas.setForeground(Color.black);
-        
+
         jlLogo.setVisible(true);
         jlLogo1.setVisible(false);
-        
+
         logo.setVisible(false);
         productos.setVisible(false);
         ventas.setVisible(false);
-        clientes.setVisible(false); 
+        clientes.setVisible(false);
         listaProd.setVisible(false);
         modProductos.setVisible(false);
         gestion.setVisible(false);
         devolucion.setVisible(false);
         listaVentas.setVisible(true);
-        
+
 //        PresentadorVentas pv = new PresentadorVentas(listaVentas);
     }//GEN-LAST:event_btnListarVentasMousePressed
 

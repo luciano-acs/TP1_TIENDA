@@ -5,6 +5,7 @@
 package Vista;
 
 import Cliente.Principal;
+import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.logging.Level;
@@ -485,6 +486,8 @@ public class pgestiones extends javax.swing.JPanel {
                 }
             } catch (RemoteException ex) {
                 Logger.getLogger(pgestiones.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (NotBoundException ex) {
+                Logger.getLogger(pgestiones.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }//GEN-LAST:event_btnBuscarPActionPerformed
@@ -499,6 +502,8 @@ public class pgestiones extends javax.swing.JPanel {
                     cbTalle.addItem(talle.get(i));
                 }
             } catch (RemoteException ex) {
+                Logger.getLogger(pgestiones.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (NotBoundException ex) {
                 Logger.getLogger(pgestiones.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
@@ -515,6 +520,8 @@ public class pgestiones extends javax.swing.JPanel {
                 listarTablaMarca();
             } catch (RemoteException ex) {
                 Logger.getLogger(pgestiones.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (NotBoundException ex) {
+                Logger.getLogger(pgestiones.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
 
@@ -529,6 +536,8 @@ public class pgestiones extends javax.swing.JPanel {
                 p.agregarColor(jtfNuvoColor.getText());
                 listarTablaColor();
             } catch (RemoteException ex) {
+                Logger.getLogger(pgestiones.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (NotBoundException ex) {
                 Logger.getLogger(pgestiones.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
@@ -545,6 +554,8 @@ public class pgestiones extends javax.swing.JPanel {
                 agregarCaracteristicas(jtfNombre.getText());
                 listarCaracteristicas(jtfNombre.getText());
             } catch (RemoteException ex) {
+                Logger.getLogger(pgestiones.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (NotBoundException ex) {
                 Logger.getLogger(pgestiones.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
@@ -603,7 +614,7 @@ public class pgestiones extends javax.swing.JPanel {
     public javax.swing.JTextField jtfNvaMarca;
     // End of variables declaration//GEN-END:variables
 
-    void cargarCombos() {
+    void cargarCombos() throws NotBoundException {
         try {
             Principal p = new Principal();
             cbTalle.removeAllItems();
@@ -623,7 +634,7 @@ public class pgestiones extends javax.swing.JPanel {
         }
     }
 
-    void listarTablaColor() {
+    void listarTablaColor() throws NotBoundException {
         try {
             Principal p = new Principal();
             String[][] colores = p.listarTablaColor();
@@ -642,7 +653,7 @@ public class pgestiones extends javax.swing.JPanel {
         }
     }
 
-    void listarTablaMarca() {
+    void listarTablaMarca() throws NotBoundException {
         try {
             Principal p = new Principal();
             String[][] marcas = p.listarTablaMarca();
@@ -661,7 +672,7 @@ public class pgestiones extends javax.swing.JPanel {
         }
     }
 
-    private void agregarCaracteristicas(String text) {
+    private void agregarCaracteristicas(String text) throws NotBoundException {
         try {
             Principal p = new Principal();
             
@@ -677,7 +688,7 @@ public class pgestiones extends javax.swing.JPanel {
         }
     }
     
-    private void listarCaracteristicas(String text) {
+    private void listarCaracteristicas(String text) throws NotBoundException {
         try {
             Principal p = new Principal();
             DefaultTableModel datosProductos = (DefaultTableModel) jtCaracteristicas.getModel();

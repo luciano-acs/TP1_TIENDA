@@ -5,6 +5,7 @@
 package Vista;
 
 import Cliente.Principal;
+import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.logging.Level;
@@ -261,6 +262,8 @@ public class pProductos extends javax.swing.JPanel {
                 showMessageDialog(null, "Producto agregado con exito");
             } catch (RemoteException ex) {
                 Logger.getLogger(pProductos.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (NotBoundException ex) {
+                Logger.getLogger(pProductos.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }//GEN-LAST:event_btnAgregarProdSoloActionPerformed
@@ -295,7 +298,7 @@ public class pProductos extends javax.swing.JPanel {
     public javax.swing.JTextField jtfNombre;
     // End of variables declaration//GEN-END:variables
 
-    void cargarCombos() {
+    void cargarCombos() throws NotBoundException {
         try {
             Principal p = new Principal();
             cbMarca.removeAllItems();

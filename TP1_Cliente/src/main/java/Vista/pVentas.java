@@ -8,6 +8,7 @@ package Vista;
 import Cliente.Principal;
 import static java.lang.Double.parseDouble;
 import static java.lang.Integer.parseInt;
+import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -480,6 +481,8 @@ public class pVentas extends javax.swing.JPanel {
                 }
             } catch (RemoteException ex) {
                 Logger.getLogger(pVentas.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (NotBoundException ex) {
+                Logger.getLogger(pVentas.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }//GEN-LAST:event_btnBuscarPActionPerformed
@@ -500,6 +503,8 @@ public class pVentas extends javax.swing.JPanel {
                 jtfRazonSocial.setText(cliente.get(1));
             }
         } catch (RemoteException ex) {
+            Logger.getLogger(pVentas.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (NotBoundException ex) {
             Logger.getLogger(pVentas.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_btnBuscarClienteActionPerformed
@@ -543,6 +548,8 @@ public class pVentas extends javax.swing.JPanel {
                 }
             } catch (RemoteException ex) {
                 Logger.getLogger(pVentas.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (NotBoundException ex) {
+                Logger.getLogger(pVentas.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }//GEN-LAST:event_btnConfirmarActionPerformed
@@ -567,6 +574,8 @@ public class pVentas extends javax.swing.JPanel {
                     total();
                 } catch (RemoteException ex) {
                     Logger.getLogger(pVentas.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (NotBoundException ex) {
+                    Logger.getLogger(pVentas.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
         }
@@ -588,6 +597,8 @@ public class pVentas extends javax.swing.JPanel {
                     
                 }
             } catch (RemoteException ex) {
+                Logger.getLogger(pVentas.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (NotBoundException ex) {
                 Logger.getLogger(pVentas.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
@@ -618,6 +629,8 @@ public class pVentas extends javax.swing.JPanel {
 //            factura.setVisible(true);            
             } catch (RemoteException ex) {
                 Logger.getLogger(pVentas.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (NotBoundException ex) {
+                Logger.getLogger(pVentas.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }//GEN-LAST:event_btnRegistarVentaActionPerformed
@@ -629,6 +642,8 @@ public class pVentas extends javax.swing.JPanel {
             p.cancelarVenta(datos, jtfID.getText());
             jlTotal.setText("" + 0);
         } catch (RemoteException ex) {
+            Logger.getLogger(pVentas.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (NotBoundException ex) {
             Logger.getLogger(pVentas.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_btnCancelarVentaActionPerformed
@@ -651,6 +666,8 @@ public class pVentas extends javax.swing.JPanel {
                 jtfID.setText(""+p.cargarId());
                 JOptionPane.showMessageDialog(null, "Venta finalizada");
             } catch (RemoteException ex) {
+                Logger.getLogger(pVentas.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (NotBoundException ex) {
                 Logger.getLogger(pVentas.class.getName()).log(Level.SEVERE, null, ex);
             }
             
@@ -746,7 +763,7 @@ public class pVentas extends javax.swing.JPanel {
         }
     }
 
-    private void cargarCombos() {
+    private void cargarCombos() throws NotBoundException {
         try {
             Principal p = new Principal();
             ArrayList<ArrayList<String>> combos = p.cargarCombosV(jtfNombre.getText());
