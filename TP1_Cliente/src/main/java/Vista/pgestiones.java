@@ -4,7 +4,7 @@
  */
 package Vista;
 
-import Cliente.Principal;
+import Cliente.PrincipalCliente;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
@@ -471,7 +471,7 @@ public class pgestiones extends javax.swing.JPanel {
     }//GEN-LAST:event_jtfNuvoColorActionPerformed
 
     private void btnBuscarPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarPActionPerformed
-        Principal p = new Principal();
+        PrincipalCliente p = new PrincipalCliente();
 
         if (jtfNombre.getText().isEmpty()) {
             JOptionPane.showMessageDialog(null, "Indique el producto a gestionar");
@@ -493,7 +493,7 @@ public class pgestiones extends javax.swing.JPanel {
     }//GEN-LAST:event_btnBuscarPActionPerformed
 
     private void cbTipoItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbTipoItemStateChanged
-        Principal p = new Principal();
+        PrincipalCliente p = new PrincipalCliente();
         cbTalle.removeAllItems();
         if (cbTipo.getSelectedIndex() > -1) {
             try {
@@ -515,7 +515,7 @@ public class pgestiones extends javax.swing.JPanel {
 
         } else {
             try {
-                Principal p = new Principal();
+                PrincipalCliente p = new PrincipalCliente();
                 p.agregarMarca(jtfNvaMarca.getText());
                 listarTablaMarca();
             } catch (RemoteException ex) {
@@ -532,7 +532,7 @@ public class pgestiones extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(null, "Indique el color a incluir");
         } else {
             try {
-                Principal p = new Principal();
+                PrincipalCliente p = new PrincipalCliente();
                 p.agregarColor(jtfNuvoColor.getText());
                 listarTablaColor();
             } catch (RemoteException ex) {
@@ -545,7 +545,7 @@ public class pgestiones extends javax.swing.JPanel {
     }//GEN-LAST:event_btnAgregarColorActionPerformed
 
     private void btnAgregarCantidadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarCantidadActionPerformed
-        Principal p = new Principal();
+        PrincipalCliente p = new PrincipalCliente();
         if (jtfCantidad.getText().isEmpty()) {
             JOptionPane.showMessageDialog(null, "Indique la cantidad a incluir");
         } else {
@@ -553,9 +553,7 @@ public class pgestiones extends javax.swing.JPanel {
                 p.actualizarStock(jtfNombre.getText(), jtfCantidad.getText(), cbTalle.getSelectedItem().toString(), cbColor.getSelectedItem().toString());
                 agregarCaracteristicas(jtfNombre.getText());
                 listarCaracteristicas(jtfNombre.getText());
-            } catch (RemoteException ex) {
-                Logger.getLogger(pgestiones.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (NotBoundException ex) {
+            } catch (RemoteException | NotBoundException ex) {
                 Logger.getLogger(pgestiones.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
@@ -616,13 +614,13 @@ public class pgestiones extends javax.swing.JPanel {
 
     void cargarCombos() throws NotBoundException {
         try {
-            Principal p = new Principal();
+            PrincipalCliente p = new PrincipalCliente();
             cbTalle.removeAllItems();
             cbColor.removeAllItems();
             cbTipo.removeAllItems();
-            
+
             ArrayList<ArrayList<String>> combos = p.cargarCombosStock();
-            
+
             for (int i = 0; i < combos.get(0).size(); i++) {
                 cbTipo.addItem(combos.get(0).get(i));
             }
@@ -636,16 +634,16 @@ public class pgestiones extends javax.swing.JPanel {
 
     void listarTablaColor() throws NotBoundException {
         try {
-            Principal p = new Principal();
+            PrincipalCliente p = new PrincipalCliente();
             String[][] colores = p.listarTablaColor();
-            
+
             DefaultTableModel datosColor = (DefaultTableModel) jtColor.getModel();
             datosColor.setNumRows(0);
-            
+
             for (int i = 0; i < colores.length; i++) {
                 Object[] fila = {colores[i][0]
                 };
-                
+
                 datosColor.addRow(fila);
             }
         } catch (RemoteException ex) {
@@ -655,16 +653,16 @@ public class pgestiones extends javax.swing.JPanel {
 
     void listarTablaMarca() throws NotBoundException {
         try {
-            Principal p = new Principal();
+            PrincipalCliente p = new PrincipalCliente();
             String[][] marcas = p.listarTablaMarca();
-            
+
             DefaultTableModel datosMarca = (DefaultTableModel) jtMarca.getModel();
             datosMarca.setNumRows(0);
-            
+
             for (int i = 0; i < marcas.length; i++) {
                 Object[] fila = {marcas[i][0]
                 };
-                
+
                 datosMarca.addRow(fila);
             }
         } catch (RemoteException ex) {
@@ -674,10 +672,10 @@ public class pgestiones extends javax.swing.JPanel {
 
     private void agregarCaracteristicas(String text) throws NotBoundException {
         try {
-            Principal p = new Principal();
-            
-            ArrayList<String> producto = p.agregarCaracteristicas(jtfNombre.getText());
-            
+            PrincipalCliente p = new PrincipalCliente();
+
+            ArrayList<String> producto = p.agregarCaracteristicas(text);
+
             jtfDescripcion.setText(producto.get(1));
             jtfMarca.setText(producto.get(2));
             jtfDescripcion.setEnabled(false);
@@ -687,20 +685,20 @@ public class pgestiones extends javax.swing.JPanel {
             Logger.getLogger(pgestiones.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+
     private void listarCaracteristicas(String text) throws NotBoundException {
         try {
-            Principal p = new Principal();
+            PrincipalCliente p = new PrincipalCliente();
             DefaultTableModel datosProductos = (DefaultTableModel) jtCaracteristicas.getModel();
             datosProductos.setNumRows(0);
-            
+
             String[][] listaCarac = p.listarCaracteristicas(text);
-            
-            for(int i = 0;i<listaCarac.length;i++){
+
+            for (int i = 0; i < listaCarac.length; i++) {
                 Object[] fila = {listaCarac[i][0],
                     listaCarac[i][1],
                     listaCarac[i][2]};
-                
+
                 datosProductos.addRow(fila);
             }
         } catch (RemoteException ex) {

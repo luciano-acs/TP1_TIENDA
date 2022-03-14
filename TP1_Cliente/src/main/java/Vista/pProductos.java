@@ -4,7 +4,7 @@
  */
 package Vista;
 
-import Cliente.Principal;
+import Cliente.PrincipalCliente;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
@@ -254,7 +254,7 @@ public class pProductos extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(null, "Campos vacios");
         }else{
             try {
-                Principal p = new Principal();
+                PrincipalCliente p = new PrincipalCliente();
                 p.cargarProducto(jtfNombre.getText(),jtfDescripcion.getText(),jtfIVA.getText(),
                         jtfCosto.getText(),jtfMargen.getText(),cbMarca.getSelectedItem().toString(),
                         cbRubro.getSelectedItem().toString(),jtfCantidad.getText());
@@ -300,7 +300,7 @@ public class pProductos extends javax.swing.JPanel {
 
     void cargarCombos() throws NotBoundException {
         try {
-            Principal p = new Principal();
+            PrincipalCliente p = new PrincipalCliente();
             cbMarca.removeAllItems();
             cbRubro.removeAllItems();
             

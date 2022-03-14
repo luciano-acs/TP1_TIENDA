@@ -4,7 +4,7 @@
  */
 package Vista;
 
-import Cliente.Principal;
+import Cliente.PrincipalCliente;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.print.PageFormat;
@@ -528,11 +528,23 @@ public class pFacturas extends javax.swing.JFrame {
     public javax.swing.JTable jtLinea;
     // End of variables declaration//GEN-END:variables
 
-    void cargar(String id, String cuit, DefaultTableModel datos) throws NotBoundException {
+    void cargar(String id, String cuit, String[][] datos) throws NotBoundException {
         try {
-            Principal p = new Principal();
-            ArrayList<String> factura = p.buscarFactura(id,cuit);
-            
+            PrincipalCliente p = new PrincipalCliente();
+            ArrayList<String> factura = p.buscarFactura(id, cuit);
+
+            DefaultTableModel ventas = (DefaultTableModel) jtLinea.getModel();
+            ventas.setNumRows(0);
+
+            for (int i = 0; i < datos.length; i++) {
+                Object[] fila = {datos[i][0],datos[i][1],
+                                datos[i][2],datos[i][3],
+                                datos[i][4],datos[i][5],
+                                datos[i][6]};
+
+                ventas.addRow(fila);
+            }
+
             jlEmpresa.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/percha (3).png")));
             jlTipo.setText(factura.get(0)); //if
             jlNroFact.setText(factura.get(1));

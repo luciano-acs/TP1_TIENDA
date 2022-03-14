@@ -4,7 +4,7 @@
  */
 package Vista;
 
-import Cliente.Principal;
+import Cliente.PrincipalCliente;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.util.logging.Level;
@@ -165,7 +165,7 @@ public class pClientes extends javax.swing.JPanel {
 
     void cargarTabla() throws NotBoundException {
         try {
-            Principal p = new Principal();
+            PrincipalCliente p = new PrincipalCliente();
             String[][] clientes = p.cargarTabla();
             
             DefaultTableModel datos = (DefaultTableModel) jtClientes.getModel();

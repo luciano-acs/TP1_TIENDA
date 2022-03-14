@@ -4,7 +4,7 @@
  */
 package Vista;
 
-import Cliente.Principal;
+import Cliente.PrincipalCliente;
 import java.awt.Color;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
@@ -711,7 +711,7 @@ public class vistaMenu extends javax.swing.JFrame {
 
     private void btnVentasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVentasActionPerformed
         try {
-            Principal p = new Principal();
+            PrincipalCliente p = new PrincipalCliente();
             int id = p.cargarId();
             ventas.jtfID.setHorizontalAlignment(SwingConstants.CENTER);
             ventas.jtfID.setText("" + id);

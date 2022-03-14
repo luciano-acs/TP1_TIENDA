@@ -4,7 +4,7 @@
  */
 package Vista;
 
-import Cliente.Principal;
+import Cliente.PrincipalCliente;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
@@ -340,7 +340,7 @@ public class pModProductos extends javax.swing.JPanel {
                 && !cbRubro.getSelectedItem().toString().isEmpty()) {
 
             try {
-                Principal p = new Principal();
+                PrincipalCliente p = new PrincipalCliente();
                 p.modificarProducto(jtfNombre.getText(), jtfDescripcion.getText(), jtfIVA.getText(),
                         jtfCosto.getText(), jtfMargen.getText(), cbMarca.getSelectedItem().toString(),
                         cbRubro.getSelectedItem().toString());
@@ -362,7 +362,7 @@ public class pModProductos extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(null, "Indique el producto a modificar");
         } else {
             try {
-                Principal p = new Principal();
+                PrincipalCliente p = new PrincipalCliente();
                 ArrayList <String> producto = p.rellenarCampos(jtfNombre.getText());
                 
                 jtfDescripcion.setText(producto.get(1));
@@ -416,7 +416,7 @@ public class pModProductos extends javax.swing.JPanel {
 
     void cargarCombosM() throws NotBoundException {
         try {
-            Principal p = new Principal();
+            PrincipalCliente p = new PrincipalCliente();
             cbMarca.removeAllItems();
             cbTalle.removeAllItems();
             cbColor.removeAllItems();

@@ -1,7 +1,7 @@
 package Vista;
 
 //import Cliente.Cliente;
-import Cliente.Principal;
+import Cliente.PrincipalCliente;
 import static java.lang.System.exit;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
@@ -143,7 +143,7 @@ public class Sesion extends javax.swing.JFrame {
 
     private void btnIngresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIngresarActionPerformed
         try {
-            Principal p = new Principal();
+            PrincipalCliente p = new PrincipalCliente();
             
             ArrayList<String> empleado = p.ingresarSistema(jtfLegajo.getText(), jtfContraseña.getText());
             if (empleado.get(0) != null) {

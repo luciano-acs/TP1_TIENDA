@@ -4,7 +4,7 @@
  */
 package Vista;
 
-import Cliente.Principal;
+import Cliente.PrincipalCliente;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
@@ -162,7 +162,7 @@ public class nvoCliente extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null,"Campos vacios");
             }else{
             try {
-                Principal p = new Principal();
+                PrincipalCliente p = new PrincipalCliente();
                 p.nuevoCliente(jtlCUIT.getText(),cbCond.getSelectedItem().toString(),
                         jtfDomicilio.getText(),jtfEmail.getText(),jtfRazon.getText());
                 JOptionPane.showMessageDialog(null,"Cliente Registrado");
@@ -233,7 +233,7 @@ public class nvoCliente extends javax.swing.JFrame {
 
     public void cargarCombos() throws NotBoundException {
         try {
-            Principal p = new Principal();
+            PrincipalCliente p = new PrincipalCliente();
             ArrayList<String> condiciones = p.cargarCombos();
             
             for (int i = 0; i < condiciones.size(); i++) {

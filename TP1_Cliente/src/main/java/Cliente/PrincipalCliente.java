@@ -15,37 +15,37 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author Luciano Acosta
  */
-public class Principal {    
-    
+public class PrincipalCliente {
+
     RemoteInterface s;
-    public static void main(String [] args){
+
+    public static void main(String[] args) {
         Sesion inicio = new Sesion();
         inicio.setVisible(true);
     }
 
-    public void conexion() throws NotBoundException{
+    public void conexion() throws NotBoundException {
         try {
-            Registry myRegistry = LocateRegistry.getRegistry("localhost",6000);
+            Registry myRegistry = LocateRegistry.getRegistry("localhost", 5000);
             s = (RemoteInterface) myRegistry.lookup("RemoteInterface");
         } catch (RemoteException ex) {
-            Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(PrincipalCliente.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
     //PRESENTADOR INICIO X1
     public ArrayList<String> ingresarSistema(String legajo, String contraseña) throws RemoteException, NotBoundException {
         conexion();
-        ArrayList<String> ingresarSistema = s.ingresarSistema(legajo,contraseña);
+        ArrayList<String> ingresarSistema = s.ingresarSistema(legajo, contraseña);
         return ingresarSistema;
     }
 
     //PRESENTADOR NUEVO CLIENTE X2
     public void nuevoCliente(String cuit, String condicion, String domicilio, String email, String razon) throws RemoteException, NotBoundException {
         conexion();
-        s.nuevoCliente(cuit,condicion,domicilio,email,razon);
+        s.nuevoCliente(cuit, condicion, domicilio, email, razon);
     }
 
-    
     public ArrayList<String> cargarCombos() throws RemoteException, NotBoundException {
         conexion();
         ArrayList<String> combos = s.cargarCombos();
@@ -62,7 +62,7 @@ public class Principal {
     //PRESENTADOR FACTURA X1
     public ArrayList<String> buscarFactura(String id, String cuit) throws RemoteException, NotBoundException {
         conexion();
-        ArrayList<String> factura = s.buscarFactura(id,cuit);
+        ArrayList<String> factura = s.buscarFactura(id, cuit);
         return factura;
     }
 
@@ -88,14 +88,14 @@ public class Principal {
     //PRESENTADOR VENTAS X1
     public String[][] listarVentas(DefaultTableModel datos, long cuit, int codigoTipo) throws RemoteException, NotBoundException {
         conexion();
-        String[][] ventas = s.listarVentas(datos,cuit,codigoTipo);
+        String[][] ventas = s.listarVentas(datos, cuit, codigoTipo);
         return ventas;
     }
 
     //PRESENTADOR MOD PRODUCTOS X3
     public void modificarProducto(String nombre, String descripcion, String iva, String costo, String margen, String marca, String rubro) throws RemoteException, NotBoundException {
         conexion();
-        s.modificarProducto(nombre,descripcion,iva,costo,margen,marca,rubro);
+        s.modificarProducto(nombre, descripcion, iva, costo, margen, marca, rubro);
     }
 
     public ArrayList<String> rellenarCampos(String nombre) throws RemoteException, NotBoundException {
@@ -113,7 +113,7 @@ public class Principal {
     //PRESENTADOR NUEVO PRODUCTO X2
     public void cargarProducto(String nombre, String descripcion, String iva, String costo, String margen, String marca, String rubro, String cantidad) throws RemoteException, NotBoundException {
         conexion();
-        s.cargarProducto(nombre,descripcion,iva,costo,margen,marca,rubro,cantidad);
+        s.cargarProducto(nombre, descripcion, iva, costo, margen, marca, rubro, cantidad);
     }
 
     public ArrayList<ArrayList<String>> cargarCombosP() throws RemoteException, NotBoundException {
@@ -141,7 +141,7 @@ public class Principal {
 
     public void actualizarStock(String nombre, String cantidad, String talle, String color) throws RemoteException, NotBoundException {
         conexion();
-        s.actualizarStock(nombre,cantidad,talle,color);
+        s.actualizarStock(nombre, cantidad, talle, color);
     }
 
     public ArrayList<ArrayList<String>> cargarCombosStock() throws RemoteException, NotBoundException {
@@ -176,9 +176,10 @@ public class Principal {
 
     //PRESENTADOR NUEVA VENTA X14
     public boolean verificarExistencia(String nombre) throws RemoteException, NotBoundException {
-        conexion();
+        conexion();        
         boolean existe = s.verificarExistencia(nombre);
-        return existe;
+        System.out.println(nombre);
+        return existe;        
     }
 
     public ArrayList<String> cargarProducto1(String nombre) throws RemoteException, NotBoundException {
@@ -207,7 +208,7 @@ public class Principal {
 
     public int consultarStock(String nombre, int codColor, int codTalle) throws RemoteException, NotBoundException {
         conexion();
-        int stock = s.consultarStock(nombre,codColor,codTalle);
+        int stock = s.consultarStock(nombre, codColor, codTalle);
         return stock;
     }
 
@@ -219,36 +220,36 @@ public class Principal {
 
     public void restaurarStock(String codigo, int cant, String talle, String color, int linea) throws RemoteException, NotBoundException {
         conexion();
-        s.restaurarStock(codigo,cant,talle,color,linea);
+        s.restaurarStock(codigo, cant, talle, color, linea);
     }
 
     public ArrayList<String> cargarComboTalle(String tipo, String nombre) throws RemoteException, NotBoundException {
         conexion();
-        ArrayList<String> comboTalle = s.cargarCombosTalle();
+        ArrayList<String> comboTalle = s.cargarCombosTalle(tipo, nombre);
         return comboTalle;
     }
 
-    public void cargarLineaV(String fecha, int comprobante, double total, DefaultTableModel datos, String cliente) throws RemoteException, NotBoundException {
+    public void cargarLineaV(String fecha, int comprobante, double total, String[][] datos, String cliente) throws RemoteException, NotBoundException {
         conexion();
-        s.cargarLineaV(fecha,comprobante,total,datos,cliente);
+        s.cargarLineaV(fecha, comprobante, total, datos, cliente);
     }
 
     public void cancelarVenta(DefaultTableModel datos, String id) throws RemoteException, NotBoundException {
         conexion();
-        s.cancelarVenta(datos,id);
+        s.cancelarVenta(datos, id);
     }
 
     public void finalizarVenta(String id, String pago, String total) throws RemoteException, NotBoundException {
         conexion();
-        s.finalizarVenta(id,pago,total);
+        s.finalizarVenta(id, pago, total);
     }
 
     public ArrayList<ArrayList<String>> cargarCombosV(String text) throws RemoteException, NotBoundException {
         conexion();
         ArrayList<ArrayList<String>> combosV = s.cargarCombosV(text);
         return combosV;
-    }    
-    
+    }
+
     //se repite
     public boolean existe(String nombre) throws RemoteException, NotBoundException {
         conexion();

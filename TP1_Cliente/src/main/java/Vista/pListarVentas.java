@@ -4,7 +4,7 @@
  */
 package Vista;
 
-import Cliente.Principal;
+import Cliente.PrincipalCliente;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.util.logging.Level;
@@ -132,7 +132,7 @@ public class pListarVentas extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnBuscarVActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarVActionPerformed
-        Principal p = new Principal();
+        PrincipalCliente p = new PrincipalCliente();
         if ("".equals(jtfCodigo.getText()) || "".equals(jtfCuit.getText())) {
             JOptionPane.showMessageDialog(null, "Campos sin completar");
         } else {

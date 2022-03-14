@@ -4,7 +4,7 @@
  */
 package Vista;
 
-import Cliente.Principal;
+import Cliente.PrincipalCliente;
 import Presentador.PresentadorProductos;
 import static java.lang.System.out;
 import java.rmi.NotBoundException;
@@ -176,9 +176,10 @@ public class pListarProductos extends javax.swing.JPanel {
         }else{
             if(jtProductos.getValueAt(fila, 0)!=null){
                 try {
-                    int codProducto = (int) jtProductos.getValueAt(fila, 0);
-                    Principal p = new Principal();
+                    int codProducto = Integer.parseInt(jtProductos.getValueAt(fila, 0).toString());
+                    PrincipalCliente p = new PrincipalCliente();
                     p.eliminarProducto(codProducto);
+                    listarTabla();
                 } catch (RemoteException ex) {
                     Logger.getLogger(pListarProductos.class.getName()).log(Level.SEVERE, null, ex);
                 } catch (NotBoundException ex) {
@@ -206,7 +207,7 @@ public class pListarProductos extends javax.swing.JPanel {
 
     void listarTabla() throws NotBoundException {
         try {
-            Principal p = new Principal();
+            PrincipalCliente p = new PrincipalCliente();
             String[][] productos = p.listarTablaProductos();
             
             DefaultTableModel datos = (DefaultTableModel) jtProductos.getModel();

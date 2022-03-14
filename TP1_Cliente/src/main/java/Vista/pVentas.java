@@ -1,11 +1,6 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
- */
 package Vista;
 
-
-import Cliente.Principal;
+import Cliente.PrincipalCliente;
 import static java.lang.Double.parseDouble;
 import static java.lang.Integer.parseInt;
 import java.rmi.NotBoundException;
@@ -461,7 +456,7 @@ public class pVentas extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnBuscarPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarPActionPerformed
-        Principal p = new Principal();
+        PrincipalCliente p = new PrincipalCliente();
         if (jtfNombre.getText().isEmpty()) {
             JOptionPane.showMessageDialog(null, "Ingrese producto a vender");
         } else {
@@ -470,18 +465,19 @@ public class pVentas extends javax.swing.JPanel {
                 System.out.println(existencia);
                 if (existencia) {
                     ArrayList<String> producto = p.cargarProducto1(jtfNombre.getText());
-                    
+
                     jtfDescripcion.setText(producto.get(1));
                     jtfMarca.setText(producto.get(2));
                     cbColor.removeAllItems();
                     cbTipo.removeAllItems();
                     cbTalle.removeAllItems();
-                    
+
                     cargarCombos();
+                }else{
+                    JOptionPane.showMessageDialog(null,"El producto no tiene stock o no existe");
                 }
-            } catch (RemoteException ex) {
-                Logger.getLogger(pVentas.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (NotBoundException ex) {
+                
+            } catch (RemoteException | NotBoundException ex) {
                 Logger.getLogger(pVentas.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
@@ -489,9 +485,9 @@ public class pVentas extends javax.swing.JPanel {
 
     private void btnBuscarClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarClienteActionPerformed
         try {
-            Principal p = new Principal();
+            PrincipalCliente p = new PrincipalCliente();
             ArrayList<String> cliente = p.buscarCliente(jtfCUIT.getText());
-            
+
             if (cliente.get(0) == null) {
                 int resp = JOptionPane.showConfirmDialog(null, "Desea registrar un nuevo clientes?");
                 if (JOptionPane.OK_OPTION == resp) {
@@ -502,15 +498,13 @@ public class pVentas extends javax.swing.JPanel {
             } else {
                 jtfRazonSocial.setText(cliente.get(1));
             }
-        } catch (RemoteException ex) {
-            Logger.getLogger(pVentas.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (NotBoundException ex) {
+        } catch (RemoteException | NotBoundException ex) {
             Logger.getLogger(pVentas.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_btnBuscarClienteActionPerformed
 
     private void btnConfirmarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConfirmarActionPerformed
-        Principal p = new Principal();
+        PrincipalCliente p = new PrincipalCliente();
         if ((jtfCantidad.getText().isEmpty() && jtfDescripcion.getText().isEmpty()) || jtfCantidad.getText().isEmpty()) {
             JOptionPane.showMessageDialog(null, "Ingrese cantidad");
         } else {
@@ -519,21 +513,21 @@ public class pVentas extends javax.swing.JPanel {
                 int codTalle = p.buscarCodTalle(cbTalle.getSelectedItem().toString());
                 int cantidadTotal = p.consultarStock(jtfNombre.getText(), codColor, codTalle);
                 if (Integer.parseInt(jtfCantidad.getText()) <= cantidadTotal) {
-                    
+
                     String codigo = jtfNombre.getText();
                     String descripcion = jtfDescripcion.getText();
                     int cant = parseInt(jtfCantidad.getText());
-                    
+
                     ArrayList<String> producto = p.cargarProducto1(jtfNombre.getText());
-                    
+
                     ArrayList<String> linea = p.cargarLinea(codigo, descripcion, cant, cbTalle.getSelectedItem().toString(), cbColor.getSelectedItem().toString(),
-                            producto.get(3), producto.get(4), producto.get(5),jtfID.getText());
-                    
+                            producto.get(3), producto.get(4), producto.get(5), jtfID.getText());
+
                     DefaultTableModel datos = (DefaultTableModel) jtLinea.getModel();
-                    Object[] fila = {linea.get(0),linea.get(1),linea.get(2),linea.get(3),linea.get(4),linea.get(5),linea.get(5)
+                    Object[] fila = {linea.get(0), linea.get(1), linea.get(2), linea.get(3), linea.get(4), linea.get(5), linea.get(5)
                     };
                     datos.addRow(fila);
-                    
+
                     if (jtLinea.getRowCount() > 0) {
                         double sum = 0;
                         for (int i = 0; i < jtLinea.getRowCount(); i++) {
@@ -555,7 +549,7 @@ public class pVentas extends javax.swing.JPanel {
     }//GEN-LAST:event_btnConfirmarActionPerformed
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
-        Principal p = new Principal();
+        PrincipalCliente p = new PrincipalCliente();
         DefaultTableModel datos = (DefaultTableModel) jtLinea.getModel();
         if (datos.getRowCount() != 0) {
             int fila = jtLinea.getSelectedRow();
@@ -564,12 +558,12 @@ public class pVentas extends javax.swing.JPanel {
             } else {
                 try {
                     int linea = parseInt(jtfID.getText());
-                    
+
                     String codigo = jtLinea.getValueAt(fila, 0).toString();
                     int cant = Integer.parseInt(jtLinea.getValueAt(fila, 2).toString());
-                    
+
                     p.restaurarStock(codigo, cant, jtLinea.getValueAt(fila, 5).toString(), jtLinea.getValueAt(fila, 6).toString(), linea);
-                    
+
                     datos.removeRow(fila);
                     total();
                 } catch (RemoteException ex) {
@@ -582,7 +576,7 @@ public class pVentas extends javax.swing.JPanel {
     }//GEN-LAST:event_btnEliminarActionPerformed
 
     private void cbTipoItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbTipoItemStateChanged
-        Principal p = new Principal();
+        PrincipalCliente p = new PrincipalCliente();
         cbTalle.removeAllItems();
         if (cbTipo.getSelectedIndex() > -1) {
             try {
@@ -594,20 +588,17 @@ public class pVentas extends javax.swing.JPanel {
                     } else {
                         cbTalle.setEnabled(false);
                     }
-                    
                 }
-            } catch (RemoteException ex) {
-                Logger.getLogger(pVentas.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (NotBoundException ex) {
+            } catch (RemoteException | NotBoundException ex) {
                 Logger.getLogger(pVentas.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }//GEN-LAST:event_cbTipoItemStateChanged
 
     private void btnRegistarVentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistarVentaActionPerformed
-        Principal p = new Principal();
+        PrincipalCliente p = new PrincipalCliente();
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyyMMdd");
-        //double montoFinal = Double.parseDouble(jlTotal.getText()) - Double.parseDouble(jlSaldo.getText());
+
         if (jtfNombre.getText().isEmpty() || jtfRazonSocial.getText().equals("")) {
             JOptionPane.showMessageDialog(null, "Campos sin completar o monto erroneo");
         } else {
@@ -615,21 +606,27 @@ public class pVentas extends javax.swing.JPanel {
                 btnCancelarVenta.setEnabled(false);
                 jtfMonto.setText(jlTotal.getText());
                 jtfMonto.setEnabled(false);
-                
+
                 DefaultTableModel datos = (DefaultTableModel) jtLinea.getModel();
+
+                String[][] datosTabla = new String[datos.getRowCount()][7];
+                for (int i = 0; i < datos.getRowCount(); i++) {
+                    datosTabla[i][0] = datos.getValueAt(i, 0).toString();
+                    datosTabla[i][1] = datos.getValueAt(i, 1).toString();
+                    datosTabla[i][2] = datos.getValueAt(i, 2).toString();
+                    datosTabla[i][3] = datos.getValueAt(i, 3).toString();
+                    datosTabla[i][4] = datos.getValueAt(i, 4).toString();
+                    datosTabla[i][5] = datos.getValueAt(i, 5).toString();
+                    datosTabla[i][6] = datos.getValueAt(i, 6).toString();
+                }
+
                 String fecha = dtf.format(LocalDateTime.now());
                 int comprobante = parseInt(jtfID.getText());
                 double total = parseDouble(jlTotal.getText());
                 String cliente = jtfCUIT.getText();
-                
-                p.cargarLineaV(fecha, comprobante, total, datos, cliente);
-                
-                
-//            factura.cargar(datos,cliente);
-//            factura.setVisible(true);            
-            } catch (RemoteException ex) {
-                Logger.getLogger(pVentas.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (NotBoundException ex) {
+
+                p.cargarLineaV(fecha, comprobante, total, datosTabla, cliente);
+            } catch (RemoteException | NotBoundException ex) {
                 Logger.getLogger(pVentas.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
@@ -637,7 +634,7 @@ public class pVentas extends javax.swing.JPanel {
 
     private void btnCancelarVentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarVentaActionPerformed
         try {
-            Principal p = new Principal();
+            PrincipalCliente p = new PrincipalCliente();
             DefaultTableModel datos = (DefaultTableModel) jtLinea.getModel();
             p.cancelarVenta(datos, jtfID.getText());
             jlTotal.setText("" + 0);
@@ -649,29 +646,40 @@ public class pVentas extends javax.swing.JPanel {
     }//GEN-LAST:event_btnCancelarVentaActionPerformed
 
     private void btnFinalizarVentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFinalizarVentaActionPerformed
-        Principal p = new Principal();
+        PrincipalCliente p = new PrincipalCliente();
         if (jtfNombre.getText().equals("") && jtfRazonSocial.getText().equals("")
                 && jtfMonto.getText().isEmpty()) {
             JOptionPane.showMessageDialog(null, "Campos sin completar");
         } else {
             try {
                 p.finalizarVenta(jtfID.getText(), cbPago.getSelectedItem().toString(), jlTotal.getText());
-                
+
                 DefaultTableModel datos = (DefaultTableModel) jtLinea.getModel();
-                pFacturas factura = new pFacturas();
-                factura.cargar(jtfID.getText(),jtfCUIT.getText(),datos);
-                factura.setVisible(true);
                 
+                String[][] datosTabla = new String[datos.getRowCount()][7];
+                for (int i = 0; i < datos.getRowCount(); i++) {
+                    datosTabla[i][0] = datos.getValueAt(i, 0).toString();
+                    datosTabla[i][1] = datos.getValueAt(i, 1).toString();
+                    datosTabla[i][2] = datos.getValueAt(i, 2).toString();
+                    datosTabla[i][3] = datos.getValueAt(i, 3).toString();
+                    datosTabla[i][4] = datos.getValueAt(i, 4).toString();
+                    datosTabla[i][5] = datos.getValueAt(i, 5).toString();
+                    datosTabla[i][6] = datos.getValueAt(i, 6).toString();
+                }               
+                
+                pFacturas factura = new pFacturas();
+                factura.cargar(jtfID.getText(), jtfCUIT.getText(), datosTabla);
+                factura.setVisible(true);
+
                 limpiar();
-                jtfID.setText(""+p.cargarId());
+                jtfID.setText("" + p.cargarId());
                 JOptionPane.showMessageDialog(null, "Venta finalizada");
             } catch (RemoteException ex) {
                 Logger.getLogger(pVentas.class.getName()).log(Level.SEVERE, null, ex);
             } catch (NotBoundException ex) {
                 Logger.getLogger(pVentas.class.getName()).log(Level.SEVERE, null, ex);
             }
-            
-            
+
         }
     }//GEN-LAST:event_btnFinalizarVentaActionPerformed
 
@@ -754,7 +762,7 @@ public class pVentas extends javax.swing.JPanel {
         jtfMonto.setText("");
         jtfNombre.setText("");
         jtfRazonSocial.setText("");
-        
+
         DefaultTableModel datos = (DefaultTableModel) jtLinea.getModel();
         System.out.println(jtLinea.getRowCount());
         for (int i = 0; i < jtLinea.getRowCount(); i++) {
@@ -765,9 +773,9 @@ public class pVentas extends javax.swing.JPanel {
 
     private void cargarCombos() throws NotBoundException {
         try {
-            Principal p = new Principal();
+            PrincipalCliente p = new PrincipalCliente();
             ArrayList<ArrayList<String>> combos = p.cargarCombosV(jtfNombre.getText());
-            
+
             for (int i = 0; i < combos.get(0).size(); i++) {
                 cbTipo.addItem(combos.get(0).get(i));
             }
